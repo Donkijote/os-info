@@ -13,6 +13,7 @@ Last updated: 2026-08-17
 - Excel formula-injection protection implemented for untrusted text.
 - Testable UI view model and a fixture-driven Tk development screen implemented.
 - Formatting, linting, strict type checking, schema validation, and automated tests run locally.
+- The same fixture, lint, typing, and test suite passes on GitHub's Linux CI runner.
 
 ## Scaffolded but not yet validated on Linux
 
@@ -36,4 +37,3 @@ Last updated: 2026-08-17
 - UEFI, legacy BIOS, and Secure Boot tests.
 - Cross-vendor hardware comparisons and HWiNFO cross-checks.
 - Verification that the report partition opens on Windows.
-

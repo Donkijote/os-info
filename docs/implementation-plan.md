@@ -40,12 +40,12 @@ Legend: ✅ completed and verified on the current Mac; 🟡 implemented or scaff
 | JSON/Excel/checksum export | ✅ | Matching JSON and Excel reports plus SHA-256 manifest are generated, validated, and atomically finalized. |
 | UI application layer | ✅ | View model and fixture-driven Tk development screen pass Mac tests; Linux full-screen integration remains pending. |
 | Privacy/safety documentation | ✅ | Privacy contract, source precedence, known limitations, fixture metadata, and release checklist added. |
-| Continuous integration | 🟡 | CI workflow is committed; GitHub execution must be observed after push. |
+| Continuous integration | ✅ | GitHub's Linux runner independently passed fixture checks, lint/format, strict typing, and all tests. |
 | Debian live image | 🟡 | Debian 13 live-build configuration and package list are committed; build/application packaging/QEMU boot are pending. |
 | USB provisioning | ⬜ | Inspection-only script intentionally refuses destructive work until Linux and disposable-USB testing are available. |
 | Physical/vendor testing | ⬜ | Requires USB plus Dell/HP/Lenovo/custom target PCs; no hardware compatibility claim yet. |
 
-Current Mac verification: fixture privacy check passed; Ruff formatting/lint passed; mypy strict checking passed for 20 source files; 12 pytest tests passed; sample JSON/XLSX/manifest export passed; Tk window construction passed. Generated sample reports remain ignored under `build/`.
+Current verification: fixture privacy check passed; Ruff formatting/lint passed; mypy strict checking passed for 20 source files; 12 pytest tests passed; sample JSON/XLSX/manifest export passed; Tk window construction passed. GitHub's Linux CI runner independently passed the repository suite. Generated sample reports remain ignored under `build/`.
 
 ## 2. Product goal and success criteria
 
