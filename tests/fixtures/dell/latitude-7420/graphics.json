@@ -1,0 +1,15 @@
+{
+  "devices": [
+    {
+      "pci_address": "0000:00:02.0",
+      "vendor_id": "8086",
+      "device_id": "9a49",
+      "vendor": "Intel Corporation",
+      "model": "Iris Xe Graphics",
+      "driver": "i915",
+      "kind": "integrated",
+      "vram_bytes": null
+    }
+  ]
+}
+

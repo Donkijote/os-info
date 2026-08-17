@@ -1,0 +1,1 @@
+"""Hardware collector adapters."""

@@ -1,0 +1,55 @@
+{
+  "system": {
+    "manufacturer": "Dell Inc.",
+    "product_name": "Latitude 7420",
+    "version": "1.0",
+    "family": "Latitude",
+    "sku": "FIXTURE-SKU",
+    "serial_number": "TEST7420",
+    "uuid": "11111111-2222-4333-8444-555555555555",
+    "asset_tag": null
+  },
+  "board": {
+    "manufacturer": "Dell Inc.",
+    "product": "0FIXTURE",
+    "version": "A00",
+    "serial_number": "BOARDTEST01"
+  },
+  "firmware": {
+    "vendor": "Dell Inc.",
+    "version": "1.99.0-FIXTURE",
+    "release_date": "01/01/2026"
+  },
+  "memory": {
+    "installed_bytes": 17179869184,
+    "usable_bytes": 16642998272,
+    "slots_total": 2,
+    "modules": [
+      {
+        "locator": "DIMM A",
+        "bank_locator": "BANK 0",
+        "size_bytes": 8589934592,
+        "memory_type": "LPDDR4",
+        "form_factor": "Row Of Chips",
+        "configured_speed_mt_s": 4267,
+        "manufacturer": "Fixture Memory Corp",
+        "part_number": "FIXTURE-8GB-A",
+        "serial_number": "RAMTEST01",
+        "status": "installed"
+      },
+      {
+        "locator": "DIMM B",
+        "bank_locator": "BANK 2",
+        "size_bytes": 8589934592,
+        "memory_type": "LPDDR4",
+        "form_factor": "Row Of Chips",
+        "configured_speed_mt_s": 4267,
+        "manufacturer": "Fixture Memory Corp",
+        "part_number": "FIXTURE-8GB-B",
+        "serial_number": "RAMTEST02",
+        "status": "installed"
+      }
+    ]
+  }
+}
+

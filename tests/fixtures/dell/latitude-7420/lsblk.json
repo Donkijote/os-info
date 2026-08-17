@@ -1,0 +1,18 @@
+{
+  "blockdevices": [
+    {
+      "name": "nvme0n1",
+      "path": "/dev/nvme0n1",
+      "type": "disk",
+      "tran": "nvme",
+      "vendor": "Fixture Storage",
+      "model": "NVME-DEMO-512",
+      "serial": "DISKTEST01",
+      "size": 512110190592,
+      "rota": false,
+      "rm": false,
+      "wwn": "eui.0011223344556677"
+    }
+  ]
+}
+

@@ -1,0 +1,16 @@
+[
+  {
+    "ifname": "lo",
+    "address": "00:00:00:00:00:00",
+    "operstate": "UNKNOWN",
+    "link_type": "loopback"
+  },
+  {
+    "ifname": "wlp0s20f3",
+    "address": "02:00:00:00:00:01",
+    "permaddr": "02:00:00:00:00:02",
+    "operstate": "DOWN",
+    "link_type": "ether"
+  }
+]
+

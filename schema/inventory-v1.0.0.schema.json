@@ -1,0 +1,132 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Donkijote/os-info/raw/main/schema/inventory-v1.0.0.schema.json",
+  "title": "HWScan normalized hardware inventory",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "report_id",
+    "created_at",
+    "scanner",
+    "operator_input",
+    "boot",
+    "system",
+    "cpus",
+    "memory",
+    "storage",
+    "graphics",
+    "network",
+    "batteries",
+    "displays",
+    "audio",
+    "usb_devices",
+    "security",
+    "sensors",
+    "diagnostics",
+    "sources"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "report_id": { "type": "string", "format": "uuid" },
+    "created_at": { "type": "string", "format": "date-time" },
+    "scanner": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["app_version", "image_build_id", "os", "kernel", "architecture"],
+      "properties": {
+        "app_version": { "type": "string", "minLength": 1 },
+        "image_build_id": { "type": "string", "minLength": 1 },
+        "os": { "type": "string", "minLength": 1 },
+        "kernel": { "type": "string", "minLength": 1 },
+        "architecture": { "type": "string", "minLength": 1 }
+      }
+    },
+    "operator_input": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["asset_tag", "operator", "location", "notes"],
+      "properties": {
+        "asset_tag": { "type": ["string", "null"] },
+        "operator": { "type": ["string", "null"] },
+        "location": { "type": ["string", "null"] },
+        "notes": { "type": ["string", "null"] }
+      }
+    },
+    "boot": { "type": "object" },
+    "system": { "type": "object" },
+    "cpus": { "type": "array", "items": { "type": "object" } },
+    "memory": { "type": "object" },
+    "storage": { "type": "array", "items": { "type": "object" } },
+    "graphics": { "type": "array", "items": { "type": "object" } },
+    "network": { "type": "array", "items": { "type": "object" } },
+    "batteries": { "type": "array", "items": { "type": "object" } },
+    "displays": { "type": "array", "items": { "type": "object" } },
+    "audio": { "type": "array", "items": { "type": "object" } },
+    "usb_devices": { "type": "array", "items": { "type": "object" } },
+    "security": { "type": "object" },
+    "sensors": { "type": "array", "items": { "type": "object" } },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["severity", "domain", "code", "message", "device_ref", "source_ref"],
+        "properties": {
+          "severity": { "enum": ["info", "warning", "error"] },
+          "domain": { "type": "string" },
+          "code": { "type": "string" },
+          "message": { "type": "string" },
+          "device_ref": { "type": ["string", "null"] },
+          "source_ref": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "collector",
+          "tool",
+          "tool_version",
+          "status",
+          "exit_code",
+          "duration_ms",
+          "started_at",
+          "timed_out",
+          "stderr_excerpt",
+          "raw_sha256"
+        ],
+        "properties": {
+          "id": { "type": "string" },
+          "collector": { "type": "string" },
+          "tool": { "type": "string" },
+          "tool_version": { "type": ["string", "null"] },
+          "status": {
+            "enum": [
+              "ok",
+              "unknown",
+              "unsupported",
+              "missing_executable",
+              "permission_denied",
+              "timed_out",
+              "oversized_output",
+              "nonzero_exit",
+              "parse_error"
+            ]
+          },
+          "exit_code": { "type": ["integer", "null"] },
+          "duration_ms": { "type": "integer", "minimum": 0 },
+          "started_at": { "type": "string", "format": "date-time" },
+          "timed_out": { "type": "boolean" },
+          "stderr_excerpt": { "type": ["string", "null"] },
+          "raw_sha256": { "type": ["string", "null"] }
+        }
+      }
+    }
+  }
+}
+

@@ -1,0 +1,14 @@
+{
+  "batteries": [
+    {
+      "manufacturer": "Fixture Battery Corp",
+      "model": "DEMO-BATTERY",
+      "serial_number": "BATTEST01",
+      "technology": "lithium-ion",
+      "design_energy_mwh": 63000,
+      "full_energy_mwh": 51660,
+      "cycle_count": 214
+    }
+  ]
+}
+

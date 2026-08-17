@@ -1,0 +1,8 @@
+{
+  "mode": "uefi",
+  "secure_boot": "enabled",
+  "live_medium_device": "/dev/sdb3",
+  "reports_partition_device": "/dev/sdb1",
+  "tpm_present": true
+}
+

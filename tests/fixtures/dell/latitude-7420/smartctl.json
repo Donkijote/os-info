@@ -1,0 +1,15 @@
+{
+  "devices": {
+    "/dev/nvme0n1": {
+      "firmware_version": "FW-DEMO-1",
+      "smart_overall": "passed",
+      "temperature_c": 34,
+      "power_on_hours": 2814,
+      "power_cycles": 812,
+      "unsafe_shutdowns": 3,
+      "nvme_percentage_used": 3,
+      "nvme_available_spare_percent": 100
+    }
+  }
+}
+

@@ -1,0 +1,8 @@
+{
+  "synthetic": true,
+  "vendor_family": "Dell",
+  "model_family": "Latitude 7420",
+  "contains_real_identifiers": false,
+  "purpose": "Parser, schema and exporter tests"
+}
+
