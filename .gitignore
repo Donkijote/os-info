@@ -1,0 +1,43 @@
+# Python and test output
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.venv/
+
+# Live-build and generated root filesystems
+work/
+build/
+dist/
+image/cache/
+image/chroot/
+image/binary/
+image/.build/
+
+# Generated boot and virtual-disk artifacts
+*.img
+*.img.*
+*.iso
+*.iso.*
+*.qcow2
+*.raw
+*.vdi
+*.vmdk
+*.squashfs
+*.zst
+*.xz
+
+# Reports and unsanitized hardware captures
+reports/
+diagnostics/
+private-fixtures/
+*.xlsx
+
+# Local editor and OS metadata
+.DS_Store
+.idea/
+.vscode/
+
