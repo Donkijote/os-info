@@ -25,6 +25,28 @@ The recommended first version is:
 
 The principal risk is not basic inventory—the Linux kernel, sysfs, SMBIOS, PCI, and storage tools provide that well. The risk is matching every HWiNFO detail. Windows vendor drivers expose some motherboard sensors, embedded-controller data, GPU details, and device-specific metrics that generic Linux drivers do not. The product should therefore report `unknown` or `unsupported`, with a reason, instead of guessing.
 
+## Implementation checkpoint — 2026-08-17
+
+Legend: ✅ completed and verified on the current Mac; 🟡 implemented or scaffolded but still requires Linux/physical validation; ⬜ not started because it requires an `amd64` Linux environment, USB, or target hardware.
+
+| Area | Status | Verified result / remaining gate |
+|---|---:|---|
+| Personal GitHub repository | ✅ | Public `Donkijote/os-info` repository created; direct commits to `main`; release links added. |
+| Python project and development environment | ✅ | Python 3.12 project locked with `uv`; formatting, linting, strict typing, and tests configured. |
+| Inventory model and JSON Schema | ✅ | Schema 1.0.0, typed model, normalization, source provenance, and diagnostics implemented. |
+| Safe command runner | ✅ | Absolute executable boundary, controlled locale/path, timeouts, process-group termination, output limit, and failure states tested. |
+| Fixture-driven collectors | ✅ | Synthetic DMI, CPU, memory, storage/health, GPU, network, battery, and boot data normalize successfully. |
+| Real Linux hardware collectors | 🟡 | Command allowlist is scaffolded; actual sysfs/tool execution and vendor fixtures require `amd64` Linux hardware. |
+| JSON/Excel/checksum export | ✅ | Matching JSON and Excel reports plus SHA-256 manifest are generated, validated, and atomically finalized. |
+| UI application layer | ✅ | View model and fixture-driven Tk development screen pass Mac tests; Linux full-screen integration remains pending. |
+| Privacy/safety documentation | ✅ | Privacy contract, source precedence, known limitations, fixture metadata, and release checklist added. |
+| Continuous integration | 🟡 | CI workflow is committed; GitHub execution must be observed after push. |
+| Debian live image | 🟡 | Debian 13 live-build configuration and package list are committed; build/application packaging/QEMU boot are pending. |
+| USB provisioning | ⬜ | Inspection-only script intentionally refuses destructive work until Linux and disposable-USB testing are available. |
+| Physical/vendor testing | ⬜ | Requires USB plus Dell/HP/Lenovo/custom target PCs; no hardware compatibility claim yet. |
+
+Current Mac verification: fixture privacy check passed; Ruff formatting/lint passed; mypy strict checking passed for 20 source files; 12 pytest tests passed; sample JSON/XLSX/manifest export passed; Tk window construction passed. Generated sample reports remain ignored under `build/`.
+
 ## 2. Product goal and success criteria
 
 ### Goal
@@ -469,7 +491,7 @@ Codex should make repository creation the first implementation action:
    gh repo create Donkijote/os-info --public --source=. --remote=origin --push
    ```
 
-7. Verify that `origin` points to `git@github.com:Donkijote/os-info.git`, the default branch is `main`, the GitHub page renders the README, and CI starts after its workflow is added.
+7. Verify that `origin` points to `https://github.com/Donkijote/os-info.git`, the default branch is `main`, the GitHub page renders the README, and CI starts after its workflow is added. This repository uses authenticated HTTPS because the Mac's default SSH identity belongs to a different GitHub account.
 
 Repository creation is an external write. Codex should perform it only when explicitly asked to execute the plan; adding these instructions to the plan alone does not create the remote.
 
@@ -634,13 +656,13 @@ Keep the application runnable on an ordinary Debian development machine with fix
 
 ## 12. Phased MVP plan
 
-### Phase 0 — Create the GitHub repository
+### Phase 0 — Create the GitHub repository ✅
 
 Create `Donkijote/os-info` from the local `/Users/manuel/Developer/personal/os-info` folder using the bootstrap procedure in section 10. Establish `main` as the only branch, add the initial documentation and ignore rules, and push the first Conventional Commit.
 
 Exit condition: the public repository exists, `origin/main` matches local `main`, generated image formats are ignored, and the README contains placeholders for the latest release image and checksum links.
 
-### Phase 1 — Lock decisions and safety contract
+### Phase 1 — Lock decisions and safety contract ✅
 
 Deliverables:
 
@@ -651,37 +673,37 @@ Deliverables:
 
 Exit condition: reviewers can determine exactly what the program is allowed to read and write.
 
-### Phase 2 — Host-runnable collector and normalized JSON
+### Phase 2 — Host-runnable collector and normalized JSON 🟡
 
 Implement the command runner, typed results, DMI, CPU, memory, PCI, block topology, storage health, network, battery, boot mode, and diagnostics. Build parsers against scrubbed fixtures first, then collect from the developer's Linux machine.
 
 Exit condition: `hwscan collect --output report.json` produces schema-valid JSON even when every optional utility is absent.
 
-### Phase 3 — Excel exporter
+### Phase 3 — Excel exporter ✅
 
 Generate the workbook sheets in section 7 from the same immutable model. Add structural checks and golden workbook tests that inspect values and styles without relying on screenshots alone.
 
 Exit condition: JSON and Excel share a report ID and all summary values agree.
 
-### Phase 4 — Appliance UI
+### Phase 4 — Appliance UI 🟡
 
 Build the full-screen interface, scan progress, warnings, operator fields, export flow, and shutdown action. Add the privileged systemd collector and polkit rule.
 
 Exit condition: a nontechnical tester can scan and export without using a terminal.
 
-### Phase 5 — Bootable development image
+### Phase 5 — Bootable development image 🟡
 
 Add the live-build configuration, minimal graphical stack, firmware packages, hardware utilities, app package, systemd units, autologin, and autostart. First support UEFI with Secure Boot disabled; add legacy BIOS in the same phase if the hardware fleet needs it.
 
 Exit condition: QEMU UEFI and BIOS boot tests reach the app and a physical USB boots on at least two machines.
 
-### Phase 6 — Same-USB reports partition and provisioning
+### Phase 6 — Same-USB reports partition and provisioning ⬜
 
 Implement the guarded provisioning script, partition layout, mount logic tied to the live medium's parent device, atomic export, free-space checks, and post-write verification.
 
 Exit condition: reports survive reboot, are readable on Windows, and neither an internal disk nor a second USB is selected accidentally in negative tests.
 
-### Phase 7 — Hardware coverage and release candidate
+### Phase 7 — Hardware coverage and release candidate ⬜
 
 Run the vendor matrix below, collect scrubbed fixtures, fix parser/driver gaps, document unsupported values, validate Secure Boot separately, and create signed/hash-published release artifacts.
 
@@ -691,28 +713,28 @@ Exit condition: all MVP acceptance criteria pass and known gaps are documented p
 
 Codex should execute these steps in order and stop at each milestone with tests and a concise change summary.
 
-### Step 0: Bootstrap the personal GitHub repository
+### Step 0: Bootstrap the personal GitHub repository ✅
 
 1. Follow section 10 exactly and verify the active GitHub account before creating anything remotely.
 2. Create the initial source-only repository on `main`; do not create issues, projects, pull requests, or secondary branches.
 3. Add the release URL placeholders immediately, but do not publish a Linux image until the build and physical boot tests pass.
 4. After every later milestone, commit the verified change directly to `main` with a focused Conventional Commit and push it.
 
-### Step 1: Inspect and scaffold
+### Step 1: Inspect and scaffold ✅
 
 1. Inspect the repository, its package manager, licenses, existing CI, and any `AGENTS.md` instructions.
 2. Create the repository layout above without introducing image-building complexity yet.
 3. Configure formatting, linting, type checking, and pytest using Debian-available dependencies.
 4. Add a `hwscan --fixture-dir ...` mode so development and CI do not require root or physical hardware.
 
-### Step 2: Define the contract before parsers
+### Step 2: Define the contract before parsers ✅
 
 1. Write `schema/inventory-v1.0.0.schema.json`.
 2. Implement dataclasses/enums that serialize exactly to that schema.
 3. Add contract tests for a complete report, a minimum report, unknown values, and rejected invalid units/enums.
 4. Treat schema additions as backward-compatible minor changes and removals/meaning changes as major changes.
 
-### Step 3: Build the safe command runner
+### Step 3: Build the safe command runner ✅
 
 1. Accept a predefined command specification, not a free-form command string.
 2. Use absolute executable paths resolved during image build.
@@ -721,7 +743,7 @@ Codex should execute these steps in order and stop at each milestone with tests 
 5. Return a structured result for missing executable, nonzero exit, timeout, permission error, invalid encoding, and oversized output.
 6. Unit-test all failure modes with tiny fake executables; never require actual disks for these tests.
 
-### Step 4: Implement collectors incrementally
+### Step 4: Implement collectors incrementally 🟡
 
 Implement in this order: sysfs/DMI identity, CPU, memory, PCI/GPU, block topology, SMART/NVMe, network, battery, boot/security, display, sensors, and broad lshw fallback.
 
@@ -743,7 +765,7 @@ Recommended precedence examples:
 
 Maintain a denylist of placeholder identifiers after case/whitespace normalization, including values such as `To Be Filled By O.E.M.`, `Default string`, `System Serial Number`, all-zero UUIDs, and empty/whitespace-only strings. Preserve the original only in opt-in diagnostics.
 
-### Step 5: Normalize and derive cautiously
+### Step 5: Normalize and derive cautiously 🟡
 
 1. Centralize byte, rate, date, identifier, and placeholder normalization.
 2. Add tests for decimal/binary units, locale-independent numbers, overflow, malformed dates, and leading-zero identifiers.
@@ -752,7 +774,7 @@ Maintain a denylist of placeholder identifiers after case/whitespace normalizati
 5. Use `unknown` health when vendor-specific ATA wear attributes cannot be interpreted reliably.
 6. Emit a diagnostic whenever sources disagree materially; retain both source values in diagnostics rather than silently picking one.
 
-### Step 6: Implement exporters
+### Step 6: Implement exporters ✅
 
 1. Serialize canonical JSON with stable key ordering and UTF-8.
 2. Validate JSON against the checked-in schema before export.
@@ -762,7 +784,7 @@ Maintain a denylist of placeholder identifiers after case/whitespace normalizati
 6. Add disk-full, read-only, unplugged-destination, duplicate-name, and interrupted-write tests.
 7. Generate a manifest containing filenames, byte lengths, SHA-256 hashes, report ID, and creation time.
 
-### Step 7: Build the UI and privilege boundary
+### Step 7: Build the UI and privilege boundary 🟡
 
 1. Implement a view model so UI widgets never invoke Linux commands directly.
 2. Run long work outside the Tk event loop and marshal updates back safely.
@@ -771,7 +793,7 @@ Maintain a denylist of placeholder identifiers after case/whitespace normalizati
 5. Permit only restarting that service and reading its result; do not grant general passwordless sudo.
 6. Verify file ownership and permissions in an automated image test.
 
-### Step 8: Build the live image
+### Step 8: Build the live image 🟡
 
 1. Create a Debian 13 `live-build` configuration committed to `image/`.
 2. Include the current stable kernel, CPU microcode packages where licensing/distribution permits, and Debian's `non-free-firmware` archive area for modern device support.
@@ -782,7 +804,7 @@ Maintain a denylist of placeholder identifiers after case/whitespace normalizati
 7. Build only on a disposable Debian 13 VM/container or CI runner with the privileges required by live-build and loop devices.
 8. Do not claim reproducible builds until two clean builds have been compared and sources/packages are pinned appropriately.
 
-### Step 9: Implement USB provisioning safely
+### Step 9: Implement USB provisioning safely ⬜
 
 1. Separate payload creation from target-device provisioning.
 2. Resolve the requested whole device and its parent relationships before displaying the destructive confirmation.
@@ -792,7 +814,7 @@ Maintain a denylist of placeholder identifiers after case/whitespace normalizati
 6. Add loopback-image integration tests for layout and content.
 7. Require a real-device manual test before release.
 
-### Step 10: Automate boot and appliance tests
+### Step 10: Automate boot and appliance tests ⬜
 
 1. Boot the built artifact under QEMU/SeaBIOS and QEMU/OVMF.
 2. Assert that the graphical target, collector service, and UI start.
@@ -800,7 +822,7 @@ Maintain a denylist of placeholder identifiers after case/whitespace normalizati
 4. Test missing `HWREPORTS`, read-only `HWREPORTS`, full partition, malformed collector fixture, and no internal drive.
 5. Keep Secure Boot tests distinct from ordinary UEFI tests; use an OVMF Secure Boot environment and verify the complete signed chain.
 
-### Step 11: Release and operator documentation
+### Step 11: Release and operator documentation 🟡
 
 1. Document how to create the USB, select a boot device, export, shut down, retrieve reports, and update the scanner.
 2. State exactly which provisioning step erases the USB.

@@ -1,0 +1,17 @@
+name: Release gate
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  not-ready:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Explain release gate
+        run: |
+          echo "Release publishing is disabled until Linux image and physical USB validation pass."
+          exit 1
+
